@@ -6,10 +6,11 @@ namespace Calculator
     {
         private static string GetOperation()
         {
-            Console.WriteLine("Enter value or operationor or \"help\" to show a list of commands: ");
+            Console.WriteLine("Enter value or operation or \"help\" to show a list of commands: ");
             string operation = Console.ReadLine();
             if (operation == "help")
             {
+                Console.WriteLine("Enter value or operation: ");
                 Console.WriteLine("Value: ");
                 Console.WriteLine("     new value: \"new\"");
                 Console.WriteLine("     clear value: \"clear\"");
@@ -21,6 +22,7 @@ namespace Calculator
                 Console.WriteLine("     multiply: \"*\"");
                 Console.WriteLine("     divide: \"/\" or \"\\\"");
                 Console.WriteLine("Enter: \"end\" to exit the calculator");
+                string operation = Console.ReadLine();
             }
             Console.WriteLine();
 
