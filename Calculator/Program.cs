@@ -22,7 +22,7 @@ namespace Calculator
                 Console.WriteLine("     multiply: \"*\"");
                 Console.WriteLine("     divide: \"/\" or \"\\\"");
                 Console.WriteLine("Enter: \"end\" to exit the calculator");
-                string operation = Console.ReadLine();
+                operation = Console.ReadLine();
             }
             Console.WriteLine();
 
