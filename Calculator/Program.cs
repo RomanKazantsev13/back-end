@@ -131,7 +131,6 @@ namespace Calculator
             float result = 0;
             float argument;
 
-            Console.WriteLine(double.MaxValue);
             do
             {
                 Console.WriteLine("Result: " + result);
