@@ -100,6 +100,12 @@ namespace Calculator
                     Console.WriteLine("Invalid opeartor");
                     break;
             }
+
+            if (double.IsInfinity(result))
+            {
+                throw new OverflowException("The result causes an overflow");
+            }
+
             return result;
         }
 
@@ -125,6 +131,7 @@ namespace Calculator
             float result = 0;
             float argument;
 
+            Console.WriteLine(double.MaxValue);
             do
             {
                 Console.WriteLine("Result: " + result);
@@ -138,6 +145,7 @@ namespace Calculator
                 else
                 {
                     argument = GetArgument(operation, result);
+                    // TODO: проверка на не end
                     result = ApplyopeartionToOperands(operation, result, argument);
                 }
             }
