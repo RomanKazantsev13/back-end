@@ -137,6 +137,10 @@ namespace Calculator
                 Console.WriteLine();
 
                 operation = GetOperation();
+                if (operation == "end")
+                {
+                    break;
+                }
                 if (operation == "new" || operation == "clear")
                 {
                     result = GetNewValue(operation);
@@ -144,7 +148,6 @@ namespace Calculator
                 else
                 {
                     argument = GetArgument(operation, result);
-                    // TODO: проверка на не end
                     result = ApplyopeartionToOperands(operation, result, argument);
                 }
             }
