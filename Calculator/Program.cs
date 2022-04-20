@@ -1,16 +1,16 @@
 ﻿using System;
+using Calculator;
 
 namespace Calculator
 {
     internal class Program
     {
-        private static string GetOperation()
+        private static string ReadOpeartion()
         {
-            Console.WriteLine("Enter value or operation or \"help\" to show a list of commands: ");
+            Console.Write("Enter value or operation or \"help\" to show a list of commands: ");
             string operation = Console.ReadLine();
             if (operation == "help")
             {
-                Console.WriteLine("Enter value or operation: ");
                 Console.WriteLine("Value: ");
                 Console.WriteLine("     new value: \"new\"");
                 Console.WriteLine("     clear value: \"clear\"");
@@ -20,8 +20,9 @@ namespace Calculator
                 Console.WriteLine("     add: \"+\"");
                 Console.WriteLine("     subtract: \"-\"");
                 Console.WriteLine("     multiply: \"*\"");
-                Console.WriteLine("     divide: \"/\" or \"\\\"");
+                Console.WriteLine("     divide: \"/\"");
                 Console.WriteLine("Enter: \"end\" to exit the calculator");
+                Console.Write("Enter value or operation: ");
                 operation = Console.ReadLine();
             }
             Console.WriteLine();
@@ -35,140 +36,75 @@ namespace Calculator
 
             Console.Write(message);
             if (!float.TryParse(Console.ReadLine(), out number))
-            {
-                throw new InvalidCastException("The resulting number is not a number");
-            }
+                throw new InvalidCastException("The resulting number is not a number"); 
             Console.WriteLine();
 
             return number;
         }
-        private static float GetArgument(string operation, float result)
+
+        private static ICalculator.Response ApplyOperation(ref Calculator calculator, string operation)
         {
-            float argument;
-
-            if (operation == "+/-")
-            {
-                return -1;
-            }
-            if (operation == "%")
-            {
-                argument = ReadNumber("Enter the precent: ");
-
-                return argument;
-            }
-
-            if (operation == "+" || operation == "-" || operation == "*" || operation == "/" || operation == "\\")
-            {
-                argument = ReadNumber("Enter the second operand: ");
-
-                return argument;
-            }
-
-            return 0;
-        }
-
-        private static float ApplyopeartionToOperands(string operation, float result, float argument)
-        {
+            float number;
             switch (operation)
             {
                 case "%":
-                    if (argument < 0)
-                    {
-                        throw new ArgumentOutOfRangeException("Negative percentage is not acceptable");
-                    }
-                    result = (float)(result * argument * 0.01);
-                    break;
+                    number = ReadNumber("Enter the precent: ");
+                    return calculator.TakePercentageOfNumber(number);
                 case "+/-":
+                    return calculator.ChangeSing();
                 case "*":
-                    result = result * argument;
-                    break;
+                    number = ReadNumber("Enter the number you want to multiply by: ");
+                    return calculator.MultiplyByNumber(number);
                 case "+":
-                    result = result + argument;
-                    break;
+                    number = ReadNumber("Enter the number you want to add: ");
+                    return calculator.AddNumber(number);
                 case "-":
-                    result = result - argument;
-                    break;
+                    number = ReadNumber("Enter the number you want to subtract: ");
+                    return calculator.SubstractNumber(number);
                 case "/":
-                case "\\":
-                    if (argument == 0)
-                    {
-                        throw new DivideByZeroException("Division by 0 is not allowed");
-                    }
-                    result = result / argument;
-                    break;
-                default:
-                    Console.WriteLine("Invalid opeartor");
-                    break;
-            }
-
-            if (double.IsInfinity(result))
-            {
-                throw new OverflowException("The result causes an overflow");
-            }
-
-            return result;
-        }
-
-        private static float GetNewValue(string operation)
-        {
-            float result = 0;
-
-            switch (operation)
-            {
+                    number = ReadNumber("Enter the number you want to divide by: ");
+                    return calculator.DivideByNumber(number);
                 case "new":
-                    result = ReadNumber("Enter new value: ");
-                    break;
+                    number = ReadNumber("Enter a new value: ");
+                    return calculator.SetNewValue(number);
                 case "clear":
-                    return result;
+                    return calculator.SetNewValue(0);
+                default:
+                    Console.WriteLine("> Invalid opeartor \n");
+                    return ICalculator.Response.Successfully;
             }
-
-            return result;
-        }
-
-        public static float Calculate()
-        {
-            string operation;
-            float result = 0;
-            float argument;
-
-            do
-            {
-                Console.WriteLine("Result: " + result);
-                Console.WriteLine();
-
-                operation = GetOperation();
-                if (operation == "end")
-                {
-                    break;
-                }
-                if (operation == "new" || operation == "clear")
-                {
-                    result = GetNewValue(operation);
-                }
-                else
-                {
-                    argument = GetArgument(operation, result);
-                    result = ApplyopeartionToOperands(operation, result, argument);
-                }
-            }
-            while (operation != "end");
-
-            return result;
         }
 
         static int Main(string[] args)
         {
             try
             {
-                float result = Calculate();
-                Console.WriteLine("The final result of calculations: " + result);
+                Calculator calculator = new Calculator();
+                string operation;
 
+                do
+                {
+                    Console.WriteLine("Result: " + calculator.GetState());
+                    Console.WriteLine();
+
+                    operation = ReadOpeartion();
+                    if (operation == "end")
+                        break;
+                    ICalculator.Response response = ApplyOperation(ref calculator, operation);
+
+                    if (response == ICalculator.Response.DivideByZero)
+                        Console.WriteLine("> The operation has not been performed. It is impossible to divide by zero \n");
+                    if (response == ICalculator.Response.Overflow)
+                        Console.WriteLine("> The operation has not been performed. Overflow \n");
+                }
+                while (operation != "end");
+
+                Console.WriteLine("The final result of calculations: " + calculator.GetState());
                 return 0;
             }
             catch (Exception error)
             {
                 Console.WriteLine(error.Message);
-
                 return 1;
             }
         }
