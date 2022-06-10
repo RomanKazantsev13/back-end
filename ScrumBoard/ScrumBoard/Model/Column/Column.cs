@@ -4,14 +4,14 @@ public class Column : IColumn
 {
     public Column(string title)
     {
-        m_title = title;
-        m_tasks = new List<ITask>();
-        m_id = Guid.NewGuid();
+        Title = title;
+        Tasks = new List<ITask>();
+        Id = Guid.NewGuid();
     }
 
     public void AddTask(ITask task)
     {
-        m_tasks.Add(task);
+        Tasks.Add(task);
     }
 
     public void RemoveTask(Guid id_task)
@@ -20,15 +20,15 @@ public class Column : IColumn
 
         if (task != null)
         {
-            m_tasks.Remove(task);
+            Tasks.Remove(task);
         }
     }
 
     public ITask? GetTaskById(Guid id_task)
     {
-        foreach (ITask task in m_tasks)
+        foreach (ITask task in Tasks)
         {
-            if (task.m_id == id_task)
+            if (task.Id == id_task)
             {
                 return task;
             }
@@ -37,7 +37,7 @@ public class Column : IColumn
         return null;
     }
 
-    public string m_title { set; get; }
-    public List<ITask> m_tasks { get; }
-    public Guid m_id { get; }
+    public string Title { set; get; }
+    public List<ITask> Tasks { get; }
+    public Guid Id { get; }
 }

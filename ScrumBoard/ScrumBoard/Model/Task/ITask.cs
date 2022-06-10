@@ -2,16 +2,16 @@
 
 public interface ITask
 {
-    public enum Priority
+    public enum TaskPriority
     {
-        Highest,
-        AboveNormal,
-        Normal,
+        Lowest = 1,
         BelowNormal,
-        Lowest
+        Normal,
+        AboveNormal,
+        Highest
     }
-    public string m_title { get; set; }
-    public string m_description { get; set; }
-    public ITask.Priority m_priority { get; set; }
-    public Guid m_id { get; }
+    public string Title { get; set; }
+    public string Description { get; set; }
+    public ITask.TaskPriority Priority { get; set; }
+    public Guid Id { get; }
 }

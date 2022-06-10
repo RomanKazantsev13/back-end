@@ -2,16 +2,16 @@
 
 public class Task : ITask
 {
-    public Task(string title, string description, ITask.Priority priority)
+    public Task(string title, string description, ITask.TaskPriority priority)
     {
-        m_title = title;
-        m_description = description;
-        m_priority = priority;
-        m_id = Guid.NewGuid();
+        Title = title;
+        Description = description;
+        Priority = priority;
+        Id = Guid.NewGuid();
     }
 
-    public string m_title { get; set; }
-    public string m_description { get; set; }
-    public ITask.Priority m_priority { get; set; }
-    public Guid m_id { get; }
+    public string Title { get; set; }
+    public string Description { get; set; }
+    public ITask.TaskPriority Priority { get; set; }
+    public Guid Id { get; }
 }

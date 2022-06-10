@@ -93,7 +93,7 @@ class Program
 
     static void AddColumn(IBoard board)
     {
-        if (board.m_columns.Count >= 10)
+        if (board.Columns.Count >= 10)
         {
             Console.WriteLine(" > The maximum number of columns has been reached");
             return;
@@ -107,17 +107,17 @@ class Program
 
     static void DeleteColumn(IBoard board)
     {
-        int? columnIndex = GetColumnIndex(board.m_columns.Count);
+        int? columnIndex = GetColumnIndex(board.Columns.Count);
         if (columnIndex == null)
             return;
-        IColumn column = board.m_columns[columnIndex.Value];
+        IColumn column = board.Columns[columnIndex.Value];
 
-        board.RemoveColumn(column.m_id);
+        board.RemoveColumn(column.Id);
     }
 
     static void AddTask(IBoard board)
     {
-        if (board.m_columns.Count == 0)
+        if (board.Columns.Count == 0)
         {
             Console.WriteLine(" > To add tasks, you need to add a column");
             return;
@@ -129,37 +129,37 @@ class Program
         Console.Write("Enter the description: ");
         string? description = Console.ReadLine();
 
-        ITask.Priority priority = GetPriority();
+        ITask.TaskPriority priority = GetPriority();
 
         board.AddTask(title, description, priority);
     }
 
     static void DeleteTask(IBoard board)
     {
-        int? columnIndex = GetColumnIndex(board.m_columns.Count);
+        int? columnIndex = GetColumnIndex(board.Columns.Count);
         if (columnIndex == null)
             return;
-        IColumn column = board.m_columns[columnIndex.Value];
+        IColumn column = board.Columns[columnIndex.Value];
 
-        int? taskIndex = GetTaskIndex(column.m_tasks.Count);
+        int? taskIndex = GetTaskIndex(column.Tasks.Count);
         if (taskIndex == null)
             return;
-        ITask task = column.m_tasks[taskIndex.Value];
+        ITask task = column.Tasks[taskIndex.Value];
 
-        column.RemoveTask(task.m_id);
+        column.RemoveTask(task.Id);
     }
 
     static void ChangeData(IBoard board)
     {
-        int? columnIndex = GetColumnIndex(board.m_columns.Count);
+        int? columnIndex = GetColumnIndex(board.Columns.Count);
         if (columnIndex == null)
             return;
-        IColumn column = board.m_columns[columnIndex.Value];
+        IColumn column = board.Columns[columnIndex.Value];
 
-        int? taskIndex = GetTaskIndex(column.m_tasks.Count);
+        int? taskIndex = GetTaskIndex(column.Tasks.Count);
         if (taskIndex == null)
             return;
-        ITask task = column.m_tasks[taskIndex.Value];
+        ITask task = column.Tasks[taskIndex.Value];
         Console.WriteLine();
 
         Console.WriteLine("Do you want to change title?");
@@ -168,7 +168,7 @@ class Program
             Console.Write("Enter the task name: ");
             string? title = Console.ReadLine();
 
-            task.m_title = title;
+            task.Title = title;
         }
 
         Console.WriteLine("Do you want to change description?");
@@ -177,15 +177,15 @@ class Program
             Console.Write("Enter the description: ");
             string? description = Console.ReadLine();
 
-            task.m_description = description;
+            task.Description = description;
         }
 
         Console.WriteLine("Do you want to change priority?");
         if (IsNeedToChange())
         {
-            ITask.Priority priority = GetPriority();
+            ITask.TaskPriority priority = GetPriority();
 
-            task.m_priority = priority;
+            task.Priority = priority;
         }
     }
 
@@ -193,42 +193,42 @@ class Program
     {
         Console.WriteLine("From: ");
         Console.Write("   ");
-        int? columnIndexFrom = GetColumnIndex(board.m_columns.Count);
+        int? columnIndexFrom = GetColumnIndex(board.Columns.Count);
         if (columnIndexFrom == null)
             return;
-        IColumn columnFrom = board.m_columns[columnIndexFrom.Value];
+        IColumn columnFrom = board.Columns[columnIndexFrom.Value];
 
         Console.Write("   ");
-        int? taskIndex = GetTaskIndex(columnFrom.m_tasks.Count);
+        int? taskIndex = GetTaskIndex(columnFrom.Tasks.Count);
         if (taskIndex == null)
             return;
-        ITask task = columnFrom.m_tasks[taskIndex.Value];
+        ITask task = columnFrom.Tasks[taskIndex.Value];
 
         Console.WriteLine("To: ");
         Console.Write("   ");
-        int? columnIndexTo = GetColumnIndex(board.m_columns.Count);
+        int? columnIndexTo = GetColumnIndex(board.Columns.Count);
         if (columnIndexTo == null)
             return;
-        IColumn columnTo = board.m_columns[columnIndexTo.Value];
+        IColumn columnTo = board.Columns[columnIndexTo.Value];
 
-        board.MoveTask(columnTo.m_id, task.m_id);
+        board.MoveTask(columnTo.Id, task.Id);
     }
 
     static void PrintBoard(IBoard board)
     {
         Console.WriteLine("=======================================================");
-        Console.WriteLine("Board: " + board.m_title);
+        Console.WriteLine("Board: " + board.Title);
         Console.WriteLine("=======================================================");
 
-        for (int columnCounter = 0; columnCounter < board.m_columns.Count; ++columnCounter)
+        for (int columnCounter = 0; columnCounter < board.Columns.Count; ++columnCounter)
         {
-            IColumn column = board.m_columns[columnCounter];
-            Console.WriteLine("(Column " + (columnCounter + 1) + ") " + column.m_title);
-            for (int tasksCounter = 0; tasksCounter < column.m_tasks.Count; ++tasksCounter)
+            IColumn column = board.Columns[columnCounter];
+            Console.WriteLine("(Column " + (columnCounter + 1) + ") " + column.Title);
+            for (int tasksCounter = 0; tasksCounter < column.Tasks.Count; ++tasksCounter)
             {
-                ITask task = column.m_tasks[tasksCounter];
-                Console.WriteLine("    <Task " + (tasksCounter + 1) + "> " + task.m_title + " [" + task.m_priority + "]");
-                Console.WriteLine("       - " + task.m_description);
+                ITask task = column.Tasks[tasksCounter];
+                Console.WriteLine("    <Task " + (tasksCounter + 1) + "> " + task.Title + " [" + task.Priority + "]");
+                Console.WriteLine("       - " + task.Description);
             }
             Console.WriteLine("-------------------------------------------------------");
         }
@@ -282,10 +282,10 @@ class Program
         return columnTask - 1;
     }
 
-    static ITask.Priority GetPriority()
+    static ITask.TaskPriority GetPriority()
     {
         string? str;
-        ITask.Priority priority;
+        ITask.TaskPriority priority;
         while (true)
         {
             Console.Write("Enter the priority (Lowest, BelowNormal, Normal, AboveNormal, Highest): ");

@@ -12,11 +12,11 @@ public class Tests
         board.AddColumn("To Do");
         string title = "Feed the cat";
 
-        board.AddTask(title, "", ITask.Priority.Normal);
+        board.AddTask(title, "", ITask.TaskPriority.Normal);
 
-        Assert.Single(board.m_columns);
-        Assert.Single(board.m_columns[0].m_tasks);
-        Assert.Equal(title, board.m_columns[0].m_tasks[0].m_title);
+        Assert.Single(board.Columns);
+        Assert.Single(board.Columns[0].Tasks);
+        Assert.Equal(title, board.Columns[0].Tasks[0].Title);
     }
 
     [Fact]
@@ -24,13 +24,13 @@ public class Tests
     {
         IBoard board = Factory.CreateBoard("Home");
         board.AddColumn("To Do");
-        board.AddTask("Feed the cat", "", ITask.Priority.Normal);
-        IColumn column = board.m_columns[0];
-        ITask task = column.m_tasks[0];
+        board.AddTask("Feed the cat", "", ITask.TaskPriority.Normal);
+        IColumn column = board.Columns[0];
+        ITask task = column.Tasks[0];
 
-        column.RemoveTask(task.m_id);
+        column.RemoveTask(task.Id);
 
-        Assert.Empty(column.m_tasks);
+        Assert.Empty(column.Tasks);
     }
 
     [Fact]
@@ -39,12 +39,12 @@ public class Tests
         IBoard board = Factory.CreateBoard("Home");
         board.AddColumn("To Do");
         board.AddColumn("Done");
-        IColumn columnDone = board.m_columns[1];
+        IColumn columnDone = board.Columns[1];
 
-        board.RemoveColumn(columnDone.m_id);
+        board.RemoveColumn(columnDone.Id);
 
-        Assert.Single(board.m_columns);
-        Assert.Equal("To Do", board.m_columns[0].m_title);
+        Assert.Single(board.Columns);
+        Assert.Equal("To Do", board.Columns[0].Title);
     }
 
     [Fact]
@@ -53,15 +53,15 @@ public class Tests
         IBoard board = Factory.CreateBoard("Home");
         board.AddColumn("To Do");
         board.AddColumn("Done");
-        board.AddTask("Feed the cat", "", ITask.Priority.Normal);
-        IColumn columnToDo = board.m_columns[0];
-        IColumn columnDone = board.m_columns[1];
-        ITask task = columnToDo.m_tasks[0];
+        board.AddTask("Feed the cat", "", ITask.TaskPriority.Normal);
+        IColumn columnToDo = board.Columns[0];
+        IColumn columnDone = board.Columns[1];
+        ITask task = columnToDo.Tasks[0];
 
-        board.MoveTask(columnDone.m_id, task.m_id);
+        board.MoveTask(columnDone.Id, task.Id);
 
-        Assert.Empty(columnToDo.m_tasks);
-        Assert.Single(columnDone.m_tasks);
+        Assert.Empty(columnToDo.Tasks);
+        Assert.Single(columnDone.Tasks);
     }
 
     [Fact]
@@ -76,7 +76,7 @@ public class Tests
 
         board.AddColumn("New Column");
 
-        Assert.Equal(10, board.m_columns.Count);
-        Assert.Equal("column_10", board.m_columns[9].m_title);
+        Assert.Equal(10, board.Columns.Count);
+        Assert.Equal("column_10", board.Columns[9].Title);
     }
 }

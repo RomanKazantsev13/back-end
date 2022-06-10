@@ -4,19 +4,19 @@ public class Board : IBoard
 {
     public Board(string title)
     {
-        m_title = title;
-        m_columns = new List<IColumn>();
+        Title = title;
+        Columns = new List<IColumn>();
     }
 
     public void AddColumn(string title)
     {
-        if (m_columns.Count() >= 10)
+        if (Columns.Count() >= 10)
         {
             return;
         }
 
         IColumn column = Factory.CreateColumn(title);
-        m_columns.Add(column);
+        Columns.Add(column);
     }
 
     public void RemoveColumn(Guid id_column)
@@ -25,26 +25,26 @@ public class Board : IBoard
 
         if (column != null)
         {
-            m_columns.Remove(column);
+            Columns.Remove(column);
         }
     }
 
-    public void AddTask(string title, string description, ITask.Priority priority)
+    public void AddTask(string title, string description, ITask.TaskPriority priority)
     {
         ITask task = Factory.CreateTask(title, description, priority);
-        m_columns[0].AddTask(task);
+        Columns[0].AddTask(task);
     }
 
     public void MoveTask(Guid id_column, Guid id_task)
     {
         ITask? task = null;
 
-        foreach (IColumn column in m_columns)
+        foreach (IColumn column in Columns)
         {
             task = column.GetTaskById(id_task);
             if (task != null)
             {
-                column.RemoveTask(task.m_id);
+                column.RemoveTask(task.Id);
                 break;
             }
         }
@@ -59,9 +59,9 @@ public class Board : IBoard
 
     private IColumn? GetColumnById(Guid id_column)
     {
-        foreach (IColumn column in m_columns)
+        foreach (IColumn column in Columns)
         {
-            if (column.m_id == id_column)
+            if (column.Id == id_column)
             {
                 return column;
             }
@@ -69,7 +69,7 @@ public class Board : IBoard
         return null;
     }
 
-    public string m_title { get; }
-    public List<IColumn> m_columns { get; }
-    private Guid m_id = Guid.NewGuid();
+    public string Title { get; }
+    public List<IColumn> Columns { get; }
+    private Guid Id = Guid.NewGuid();
 }

@@ -11,7 +11,7 @@ public class Factory
         return new Column(title);
     }
 
-    public static ITask CreateTask(string title, string description, ITask.Priority priority)
+    public static ITask CreateTask(string title, string description, ITask.TaskPriority priority)
     {
         return new Task(title, description, priority);
     }
