@@ -29,7 +29,7 @@ class Program
         while (command != "...")
         {
             command = Console.ReadLine();
-            if (!HandleCommand(ref board, command))
+            if (!HandleCommand(board, command))
             {
                 Console.WriteLine(" > Unknown command");
             }
@@ -51,36 +51,36 @@ class Program
         Console.WriteLine();
     }
 
-    static bool HandleCommand(ref IBoard board, string command)
+    static bool HandleCommand(IBoard board, string command)
     {
         switch (command)
         {
             case "AddColumn":
-                AddColumn(ref board);
+                AddColumn(board);
                 return true;
 
             case "DeleteColumn":
-                DeleteColumn(ref board);
+                DeleteColumn(board);
                 return true;
 
             case "AddTask":
-                AddTask(ref board);
+                AddTask(board);
                 return true;
 
             case "DeleteTask":
-                DeleteTask(ref board);
+                DeleteTask(board);
                 return true;
 
             case "ChangeData":
-                ChangeData(ref board);
+                ChangeData(board);
                 return true;
 
             case "MoveTask":
-                MoveTask(ref board);
+                MoveTask(board);
                 return true;
 
             case "PrintBoard":
-                PrintBoard(ref board);
+                PrintBoard(board);
                 return true;
 
             case "...":
@@ -91,7 +91,7 @@ class Program
         }
     }
 
-    static void AddColumn(ref IBoard board)
+    static void AddColumn(IBoard board)
     {
         if (board.m_columns.Count >= 10)
         {
@@ -105,7 +105,7 @@ class Program
         board.AddColumn(title);
     }
 
-    static void DeleteColumn(ref IBoard board)
+    static void DeleteColumn(IBoard board)
     {
         int? columnIndex = GetColumnIndex(board.m_columns.Count);
         if (columnIndex == null)
@@ -115,7 +115,7 @@ class Program
         board.RemoveColumn(column.m_id);
     }
 
-    static void AddTask(ref IBoard board)
+    static void AddTask(IBoard board)
     {
         if (board.m_columns.Count == 0)
         {
@@ -134,7 +134,7 @@ class Program
         board.AddTask(title, description, priority);
     }
 
-    static void DeleteTask(ref IBoard board)
+    static void DeleteTask(IBoard board)
     {
         int? columnIndex = GetColumnIndex(board.m_columns.Count);
         if (columnIndex == null)
@@ -149,7 +149,7 @@ class Program
         column.RemoveTask(task.m_id);
     }
 
-    static void ChangeData(ref IBoard board)
+    static void ChangeData(IBoard board)
     {
         int? columnIndex = GetColumnIndex(board.m_columns.Count);
         if (columnIndex == null)
@@ -189,7 +189,7 @@ class Program
         }
     }
 
-    static void MoveTask(ref IBoard board)
+    static void MoveTask(IBoard board)
     {
         Console.WriteLine("From: ");
         Console.Write("   ");
@@ -214,7 +214,7 @@ class Program
         board.MoveTask(columnTo.m_id, task.m_id);
     }
 
-    static void PrintBoard(ref IBoard board)
+    static void PrintBoard(IBoard board)
     {
         Console.WriteLine("=======================================================");
         Console.WriteLine("Board: " + board.m_title);
