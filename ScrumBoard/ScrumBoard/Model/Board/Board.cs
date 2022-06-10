@@ -2,6 +2,10 @@
 
 public class Board : IBoard
 {
+    public string Title { get; }
+    public List<IColumn> Columns { get; }
+    private Guid Id = Guid.NewGuid();
+
     public Board(string title)
     {
         Title = title;
@@ -68,8 +72,4 @@ public class Board : IBoard
         }
         return null;
     }
-
-    public string Title { get; }
-    public List<IColumn> Columns { get; }
-    private Guid Id = Guid.NewGuid();
 }

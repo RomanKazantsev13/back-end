@@ -2,6 +2,10 @@
 
 public class Column : IColumn
 {
+    public string Title { set; get; }
+    public List<ITask> Tasks { get; }
+    public Guid Id { get; }
+
     public Column(string title)
     {
         Title = title;
@@ -36,8 +40,4 @@ public class Column : IColumn
 
         return null;
     }
-
-    public string Title { set; get; }
-    public List<ITask> Tasks { get; }
-    public Guid Id { get; }
 }
