@@ -285,18 +285,18 @@ class Program
     static ITask.TaskPriority GetPriority()
     {
         string? str;
-        ITask.TaskPriority priority;
+        int priority = 0;
         while (true)
         {
-            Console.Write("Enter the priority (Lowest, BelowNormal, Normal, AboveNormal, Highest): ");
+            Console.Write("Enter the priority (1, 2, .., 5): ");
             str = Console.ReadLine();
-            if (Enum.TryParse(str, out priority))
+            if (Int32.TryParse(str, out priority) && 1 <= priority && priority <= 5)
             {
                 break;
             }
             Console.WriteLine(" > Invalid priority value");
         }
 
-        return priority;
+        return (ITask.TaskPriority)priority;
     }
 }
