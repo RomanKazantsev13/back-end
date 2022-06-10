@@ -223,13 +223,12 @@ class Program
         for (int columnCounter = 0; columnCounter < board.m_columns.Count; ++columnCounter)
         {
             IColumn column = board.m_columns[columnCounter];
-            Console.WriteLine(column.m_title + " (" + (columnCounter + 1) + ")");
+            Console.WriteLine("(Column " + (columnCounter + 1) + ") " + column.m_title);
             for (int tasksCounter = 0; tasksCounter < column.m_tasks.Count; ++tasksCounter)
             {
                 ITask task = column.m_tasks[tasksCounter];
-                Console.WriteLine("    <" + (tasksCounter + 1) + "> " + task.m_title);
+                Console.WriteLine("    <Task " + (tasksCounter + 1) + "> " + task.m_title + " [" + task.m_priority + "]");
                 Console.WriteLine("       - " + task.m_description);
-                Console.WriteLine("       - " + task.m_priority);
             }
             Console.WriteLine("-------------------------------------------------------");
         }
