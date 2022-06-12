@@ -20,7 +20,7 @@ public class Column : IColumn
 
     public void RemoveTask(Guid id_task)
     {
-        ITask? task = GetTaskById(id_task);
+        ITask? task = GetTask(id_task);
 
         if (task != null)
         {
@@ -28,7 +28,7 @@ public class Column : IColumn
         }
     }
 
-    public ITask? GetTaskById(Guid id_task)
+    public ITask? GetTask(Guid id_task)
     {
         foreach (ITask task in Tasks)
         {
