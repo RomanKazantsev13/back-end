@@ -1,7 +1,6 @@
 ﻿namespace ScrumBoardConsoleApp;
 
 using ScrumBoard;
-using ScrumBoardConsoleApp.Data;
 
 public class TaskService
 {
@@ -14,17 +13,17 @@ public class TaskService
 
     public void ChangeTitle()
     {
-        _task.Title = TaskData.GetTitle();
+        _task.Title = ScrumBoardService.GetTitle();
     }
 
     public void ChangeDescription()
     {
-        _task.Description = TaskData.GetDescription();
+        _task.Description = ScrumBoardService.GetDescription();
     }
 
     public void ChangePriority()
     {
-        _task.Priority = TaskData.GetPriority();
+        _task.Priority = ScrumBoardService.GetPriority();
     }
 
     public void Print()

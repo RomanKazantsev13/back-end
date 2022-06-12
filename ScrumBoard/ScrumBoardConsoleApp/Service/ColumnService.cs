@@ -1,7 +1,6 @@
 ﻿namespace ScrumBoardConsoleApp;
 
 using ScrumBoard;
-using ScrumBoardConsoleApp.Data;
 
 public class ColumnService
 {
@@ -14,9 +13,9 @@ public class ColumnService
 
     public void AddTask()
     {
-        string title = TaskData.GetTitle();
-        string description = TaskData.GetDescription();
-        ITask.TaskPriority priority = TaskData.GetPriority();
+        string title = ScrumBoardService.GetTitle();
+        string description = ScrumBoardService.GetDescription();
+        ITask.TaskPriority priority = ScrumBoardService.GetPriority();
 
         ITask task = Factory.CreateTask(title, description, priority);
 
@@ -25,7 +24,7 @@ public class ColumnService
 
     public void RemoveTask()
     {
-        Guid? id_task = BoardData.GetId("Enter the task id");
+        Guid? id_task = ScrumBoardService.GetId("Enter the task id");
 
         _column.RemoveTask(id_task);
     }

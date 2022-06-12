@@ -1,7 +1,6 @@
 ﻿namespace ScrumBoardConsoleApp;
 
 using ScrumBoard;
-using ScrumBoardConsoleApp.Data;
 
 enum State
 {
@@ -132,7 +131,7 @@ class Controller
                 return true;
 
             case "Use Board":
-                Guid? id_board = BoardData.GetId("Enter the board id");
+                Guid? id_board = ScrumBoardService.GetId("Enter the board id");
                 _board = GetBoard(id_board);
 
                 if (_board != null)
@@ -144,7 +143,7 @@ class Controller
 
             case "Use Column":
                 _state = State.WorkWithColumn;
-                Guid? id_column = BoardData.GetId("Enter the column id");
+                Guid? id_column = ScrumBoardService.GetId("Enter the column id");
                 _column = GetColumn(id_column);
 
                 if (_column != null)
@@ -156,7 +155,7 @@ class Controller
 
             case "Use Task":
                 _state = State.WorkWithTask;
-                Guid? id_task = BoardData.GetId("Enter the task id");
+                Guid? id_task = ScrumBoardService.GetId("Enter the task id");
                 _task = GetTask(id_task);
 
                 if (_task != null)
@@ -205,7 +204,7 @@ class Controller
                 return true;
 
             case "Use Board":
-                Guid? id_board = BoardData.GetId("Enter the board id");
+                Guid? id_board = ScrumBoardService.GetId("Enter the board id");
                 _board = GetBoard(id_board);
 
                 if (_board != null)
@@ -217,7 +216,7 @@ class Controller
 
             case "Use Column":
                 _state = State.WorkWithColumn;
-                Guid? id_column = BoardData.GetId("Enter the column id");
+                Guid? id_column = ScrumBoardService.GetId("Enter the column id");
                 _column = GetColumn(id_column);
 
                 if (_column != null)
@@ -229,7 +228,7 @@ class Controller
 
             case "Use Task":
                 _state = State.WorkWithTask;
-                Guid? id_task = BoardData.GetId("Enter the task id");
+                Guid? id_task = ScrumBoardService.GetId("Enter the task id");
                 _task = GetTask(id_task);
 
                 if (_task != null)
@@ -274,7 +273,7 @@ class Controller
                 return true;
 
             case "Use Board":
-                Guid? id_board = BoardData.GetId("Enter the board id");
+                Guid? id_board = ScrumBoardService.GetId("Enter the board id");
                 _board = GetBoard(id_board);
 
                 if (_board != null)
@@ -286,7 +285,7 @@ class Controller
 
             case "Use Column":
                 _state = State.WorkWithColumn;
-                Guid? id_column = BoardData.GetId("Enter the column id");
+                Guid? id_column = ScrumBoardService.GetId("Enter the column id");
                 _column = GetColumn(id_column);
 
                 if (_column != null)
@@ -298,7 +297,7 @@ class Controller
 
             case "Use Task":
                 _state = State.WorkWithTask;
-                Guid? id_task = BoardData.GetId("Enter the task id");
+                Guid? id_task = ScrumBoardService.GetId("Enter the task id");
                 _task = GetTask(id_task);
 
                 if (_task != null)
@@ -343,7 +342,7 @@ class Controller
                 return true;
 
             case "Use Board":
-                Guid? id_board = BoardData.GetId("Enter the board id");
+                Guid? id_board = ScrumBoardService.GetId("Enter the board id");
                 _board = GetBoard(id_board);
 
                 if (_board != null)
@@ -355,7 +354,7 @@ class Controller
 
             case "Use Column":
                 _state = State.WorkWithColumn;
-                Guid? id_column = BoardData.GetId("Enter the column id");
+                Guid? id_column = ScrumBoardService.GetId("Enter the column id");
                 _column = GetColumn(id_column);
 
                 if (_column != null)
@@ -367,7 +366,7 @@ class Controller
 
             case "Use Task":
                 _state = State.WorkWithTask;
-                Guid? id_task = BoardData.GetId("Enter the task id");
+                Guid? id_task = ScrumBoardService.GetId("Enter the task id");
                 _task = GetTask(id_task);
 
                 if (_task != null)
@@ -456,7 +455,7 @@ class Controller
 
     static void RemoveBoard()
     {
-        Guid? id_board = BoardData.GetId("Enter the board id");
+        Guid? id_board = ScrumBoardService.GetId("Enter the board id");
 
         foreach (IBoard board in boards)
         {
