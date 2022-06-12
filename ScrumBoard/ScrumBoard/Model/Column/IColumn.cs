@@ -7,6 +7,6 @@ public interface IColumn
     public Guid Id { get; }
 
     public void AddTask(ITask task);
-    public void RemoveTask(Guid id_task);
-    public ITask? GetTask(Guid id_task);
+    public void RemoveTask(Guid? id_task);
+    public ITask? GetTask(Guid? id_task);
 }

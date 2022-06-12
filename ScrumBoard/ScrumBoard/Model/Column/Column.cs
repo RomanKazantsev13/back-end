@@ -18,7 +18,7 @@ public class Column : IColumn
         Tasks.Add(task);
     }
 
-    public void RemoveTask(Guid id_task)
+    public void RemoveTask(Guid? id_task)
     {
         ITask? task = GetTask(id_task);
 
@@ -28,7 +28,7 @@ public class Column : IColumn
         }
     }
 
-    public ITask? GetTask(Guid id_task)
+    public ITask? GetTask(Guid? id_task)
     {
         foreach (ITask task in Tasks)
         {

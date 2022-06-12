@@ -24,7 +24,7 @@ public class Board : IBoard
         Columns.Add(column);
     }
 
-    public void RemoveColumn(Guid id_column)
+    public void RemoveColumn(Guid? id_column)
     {
         IColumn? column = GetColumn(id_column);
 
@@ -34,7 +34,7 @@ public class Board : IBoard
         }
     }
 
-    private IColumn? GetColumn(Guid id_column)
+    private IColumn? GetColumn(Guid? id_column)
     {
         foreach (IColumn column in Columns)
         {
@@ -56,7 +56,7 @@ public class Board : IBoard
         ITask task = Factory.CreateTask(title, description, priority);
         Columns[0].AddTask(task);
     }
-    public void RemoveTask(Guid id_task)
+    public void RemoveTask(Guid? id_task)
     {
         foreach (IColumn column in Columns)
         {
@@ -64,7 +64,7 @@ public class Board : IBoard
         }
     }
 
-    public ITask? GetTask(Guid id_task)
+    public ITask? GetTask(Guid? id_task)
     {
         ITask? task = null;
         foreach (IColumn column in Columns)
@@ -80,7 +80,7 @@ public class Board : IBoard
         return task;
     }
 
-    public List<ITask> GetAllTask(Guid id_column)
+    public List<ITask> GetAllTask(Guid? id_column)
     {
         List<ITask> tasks = new List<ITask>();
 
@@ -95,7 +95,7 @@ public class Board : IBoard
         return tasks;
     }
 
-    public void MoveTask(Guid id_column, Guid id_task)
+    public void MoveTask(Guid? id_column, Guid? id_task)
     {
         ITask? task = null;
 
