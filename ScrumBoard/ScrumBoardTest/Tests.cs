@@ -10,8 +10,9 @@ public class Tests
     public void AddTask_NoColumns_TaskWasNotAdded()
     { 
         IBoard board = Factory.CreateBoard("Home");
+        ITask task = Factory.CreateTask("Feed the cat", "", ITask.TaskPriority.Normal);
 
-        board.AddTask("Feed the cat", "", ITask.TaskPriority.Normal);
+        board.AddTask(task);
 
         Assert.Empty(board.Columns);
     }
@@ -21,9 +22,11 @@ public class Tests
     { 
         string title = "Feed the cat";
         IBoard board = Factory.CreateBoard("Home");
-        board.AddColumn("To Do");
+        IColumn column = Factory.CreateColumn("To Do");
+        board.AddColumn(column);
+        ITask task = Factory.CreateTask(title, "", ITask.TaskPriority.Normal);
 
-        board.AddTask(title, "", ITask.TaskPriority.Normal);
+        board.AddTask(task);
 
         Assert.Single(board.Columns);
         Assert.Single(board.Columns[0].Tasks);
@@ -34,8 +37,10 @@ public class Tests
     public void RemoveTask_FromColumnToDo_ColumnToDoIsEmpty()
     {
         IBoard board = Factory.CreateBoard("Home");
-        board.AddColumn("To Do");
-        board.AddTask("Feed the cat", "", ITask.TaskPriority.Normal);
+        IColumn column = Factory.CreateColumn("To Do");
+        board.AddColumn(column);
+        ITask task = Factory.CreateTask("Feed the cat", "", ITask.TaskPriority.Normal);
+        board.AddTask(task);
         IColumn columnToDo = board.Columns[0];
 
         board.RemoveTask(columnToDo.Tasks[0].Id);
@@ -47,42 +52,48 @@ public class Tests
     public void ChangeTitle_Task_TitleHasBeenChanged()
     {
         IBoard board = Factory.CreateBoard("Home");
-        board.AddColumn("To Do");
-        board.AddTask("Feed the cat", "", ITask.TaskPriority.Normal);
-        ITask task = board.Columns[0].Tasks[0];
+        IColumn column = Factory.CreateColumn("To Do");
+        board.AddColumn(column);
+        ITask task = Factory.CreateTask("Feed the cat", "", ITask.TaskPriority.Normal);
+        board.AddTask(task);
+        ITask taskInColumn = board.Columns[0].Tasks[0];
         string newTitle = "Feed the dog";
 
-        task.Title = newTitle;
+        taskInColumn.Title = newTitle;
 
-        Assert.True(task.Title == newTitle);
+        Assert.True(taskInColumn.Title == newTitle);
     }
 
     [Fact]
     public void ChangeDescription_Task_DescriptionHasBeenChanged()
     {
         IBoard board = Factory.CreateBoard("Home");
-        board.AddColumn("To Do");
-        board.AddTask("Feed the cat", "", ITask.TaskPriority.Normal);
-        ITask task = board.Columns[0].Tasks[0];
+        IColumn column = Factory.CreateColumn("To Do");
+        board.AddColumn(column);
+        ITask task = Factory.CreateTask("Feed the cat", "", ITask.TaskPriority.Normal);
+        board.AddTask(task);
+        ITask taskInColumn = board.Columns[0].Tasks[0];
         string newDescription = "Buy food in the store and feed the cat";
 
-        task.Description = newDescription;
+        taskInColumn.Description = newDescription;
 
-        Assert.True(task.Description == newDescription);
+        Assert.True(taskInColumn.Description == newDescription);
     }
 
     [Fact]
     public void ChangePriority_Task_PriorityHasBeenChanged()
     {
         IBoard board = Factory.CreateBoard("Home");
-        board.AddColumn("To Do");
-        board.AddTask("Feed the cat", "Buy food in the store and feed the cat", ITask.TaskPriority.Normal);
-        ITask task = board.Columns[0].Tasks[0];
+        IColumn column = Factory.CreateColumn("To Do");
+        board.AddColumn(column);
+        ITask task = Factory.CreateTask("Feed the cat", "Buy food in the store and feed the cat", ITask.TaskPriority.Normal);
+        board.AddTask(task);
+        ITask taskInColumn = board.Columns[0].Tasks[0];
         ITask.TaskPriority newPriority = ITask.TaskPriority.Highest;
 
-        task.Priority = newPriority;
+        taskInColumn.Priority = newPriority;
 
-        Assert.True(task.Priority == newPriority);
+        Assert.True(taskInColumn.Priority == newPriority);
     }
 
     [Fact]
@@ -90,8 +101,9 @@ public class Tests
     {
         IBoard board = Factory.CreateBoard("Study");
         string title = "History";
+        IColumn column = Factory.CreateColumn(title);
 
-        board.AddColumn(title);
+        board.AddColumn(column);
 
         Assert.Single(board.Columns);
         Assert.True(board.Columns[0].Title == title);
@@ -103,11 +115,12 @@ public class Tests
         IBoard board = Factory.CreateBoard("Study");
         for (int i = 1; i <= 10; ++i)
         {
-            string title = "column_" + i;
-            board.AddColumn(title);
+            IColumn column = Factory.CreateColumn("column_" + i);
+            board.AddColumn(column);
         }
 
-        board.AddColumn("column_11");
+        IColumn column11 = Factory.CreateColumn("column_11");
+        board.AddColumn(column11);
 
         Assert.True(board.Columns.Count == 10); 
         Assert.True(board.Columns[0].Title == "column_1");
@@ -118,7 +131,8 @@ public class Tests
     public void RemoveColumn_Board_ColumnWasRemoved()
     {
         IBoard board = Factory.CreateBoard("Study");
-        board.AddColumn("History");
+        IColumn column = Factory.CreateColumn("History");
+        board.AddColumn(column);
 
         board.RemoveColumn(board.Columns[0].Id);
 
@@ -153,12 +167,12 @@ public class Tests
     public void MoveTask_Board_TaskWasMoved()
     {
         IBoard board = Factory.CreateBoard("Home");
-        board.AddColumn("To Do");
-        IColumn columnToDo = board.Columns[0];
-        board.AddTask("Feed the cat", "", ITask.TaskPriority.Normal);
-        ITask task = columnToDo.Tasks[0];
-        board.AddColumn("Done");
-        IColumn columnDone = board.Columns[1];
+        IColumn columnToDo = Factory.CreateColumn("To Do");
+        board.AddColumn(columnToDo);
+        ITask task = Factory.CreateTask("Feed the cat", "", ITask.TaskPriority.Normal);
+        board.AddTask(task);
+        IColumn columnDone = Factory.CreateColumn("To Do");
+        board.AddColumn(columnDone);
 
         board.MoveTask(columnDone.Id, task.Id);
 

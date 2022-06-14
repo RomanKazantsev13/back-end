@@ -23,7 +23,8 @@ public class BoardService
 
             if (title != "" && title != null)
             {
-                _board.AddColumn(title);
+                IColumn  column = Factory.CreateColumn(title);
+                _board.AddColumn(column);
                 break;
             }
 
@@ -37,7 +38,8 @@ public class BoardService
         string description = ScrumBoardService.GetDescription();
         ITask.TaskPriority priority = ScrumBoardService.GetPriority();
 
-        _board.AddTask(title, description, priority);
+        ITask task = Factory.CreateTask(title, description, priority);
+        _board.AddTask(task);
     }
 
     public void MoveTask()

@@ -13,14 +13,13 @@ public class Board : IBoard
         Id = Guid.NewGuid();
     }
 
-    public void AddColumn(string title)
+    public void AddColumn(IColumn column)
     {
         if (Columns.Count() >= 10)
         {
             return;
         }
 
-        IColumn column = Factory.CreateColumn(title);
         Columns.Add(column);
     }
 
@@ -46,14 +45,13 @@ public class Board : IBoard
         return null;
     }
 
-    public void AddTask(string title, string description, ITask.TaskPriority priority)
+    public void AddTask(ITask task)
     {
         if (Columns.Count() <= 0)
         {
             return;
         }
 
-        ITask task = Factory.CreateTask(title, description, priority);
         Columns[0].AddTask(task);
     }
     public void RemoveTask(Guid? id_task)
